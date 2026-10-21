@@ -1,857 +1,599 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shubham Londhe • TrainWithShubham</title>
-  <meta name="description" content="Developer Advocate • DevOps • AWS • Kubernetes • Agentic AI. Building TrainWithShubham." />
-  <meta name="theme-color" content="#0b0f19" />
-  <style>
-    /* ---------- Reset / Base ---------- */
-    *, *::before, *::after { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color: rgba(255,255,255,0.88);
-      background: radial-gradient(1200px 800px at 10% 10%, rgba(255,120,0,.20), transparent 60%),
-                  radial-gradient(1000px 700px at 90% 20%, rgba(70,160,255,.20), transparent 55%),
-                  radial-gradient(900px 700px at 60% 95%, rgba(160,70,255,.18), transparent 55%),
-                  linear-gradient(180deg, #060914 0%, #070a16 35%, #070a12 100%);
-      overflow-x: hidden;
-    }
-    a { color: inherit; text-decoration: none; }
-    img { max-width: 100%; display: block; }
-    .container { width: min(1120px, 92vw); margin: 0 auto; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps Engineer Portfolio</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            line-height: 1.6;
+        }
 
-    /* ---------- Fancy Background Orbs ---------- */
-    .orb {
-      position: absolute; inset: auto; border-radius: 999px;
-      filter: blur(50px); opacity: .55; pointer-events: none;
-      transform: translate3d(0,0,0);
-      animation: float 10s ease-in-out infinite;
-      mix-blend-mode: screen;
-    }
-    .orb.one { width: 420px; height: 420px; left: -140px; top: 120px; background: rgba(255,125,0,.38); }
-    .orb.two { width: 380px; height: 380px; right: -120px; top: 180px; background: rgba(90,170,255,.32); animation-delay: -3s; }
-    .orb.three { width: 460px; height: 460px; left: 45%; bottom: -220px; background: rgba(170,90,255,.28); animation-delay: -6s; }
-    @keyframes float {
-      0%, 100% { transform: translateY(0) translateX(0) scale(1); }
-      50% { transform: translateY(-18px) translateX(10px) scale(1.03); }
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    /* ---------- Glass UI Tokens ---------- */
-    :root{
-      --glass: rgba(255,255,255,.08);
-      --glass-2: rgba(255,255,255,.06);
-      --stroke: rgba(255,255,255,.14);
-      --stroke-2: rgba(255,255,255,.10);
-      --shadow: 0 18px 60px rgba(0,0,0,.35);
-      --shadow-soft: 0 12px 30px rgba(0,0,0,.28);
-      --orange: #ff7a18;
-      --blue: #4aa3ff;
-      --purple: #b56bff;
-      --text: rgba(255,255,255,.88);
-      --muted: rgba(255,255,255,.68);
-    }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-    /* ---------- Subtle Grain ---------- */
-    .grain{
-      position: fixed; inset: 0; pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.10'/%3E%3C/svg%3E");
-      opacity: .18;
-      mix-blend-mode: overlay;
-    }
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
 
-    /* ---------- Navbar ---------- */
-    .nav-wrap{
-      position: sticky; top: 0; z-index: 50;
-      backdrop-filter: blur(14px);
-      background: linear-gradient(180deg, rgba(7,10,18,.75), rgba(7,10,18,.20));
-      border-bottom: 1px solid rgba(255,255,255,.08);
-    }
-    .nav{
-      display:flex; align-items:center; justify-content:space-between;
-      padding: 14px 0;
-    }
-    .brand{
-      display:flex; align-items:center; gap: 10px;
-      letter-spacing: .2px;
-    }
-    .logo{
-      width: 36px; height: 36px; border-radius: 12px;
-      background: radial-gradient(14px 14px at 30% 30%, rgba(255,255,255,.55), transparent 55%),
-                  linear-gradient(135deg, rgba(255,122,24,.9), rgba(181,107,255,.75));
-      box-shadow: 0 14px 30px rgba(0,0,0,.35);
-      border: 1px solid rgba(255,255,255,.20);
-      position: relative;
-      overflow: hidden;
-    }
-    .logo::after{
-      content:""; position:absolute; inset:-40%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
-      transform: rotate(25deg) translateX(-40%);
-      animation: shine 4.8s ease-in-out infinite;
-      opacity: .7;
-    }
-    @keyframes shine{
-      0%, 30% { transform: rotate(25deg) translateX(-60%); }
-      55% { transform: rotate(25deg) translateX(60%); }
-      100% { transform: rotate(25deg) translateX(60%); }
-    }
-    .brand h1{ margin:0; font-size: 14.5px; font-weight: 750; }
-    .brand p{ margin:0; font-size: 12px; color: var(--muted); }
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    .links{ display:flex; gap: 14px; align-items:center; }
-    .links a{
-      padding: 9px 12px;
-      border-radius: 12px;
-      color: rgba(255,255,255,.76);
-      border: 1px solid transparent;
-      transition: transform .22s ease, background .22s ease, border-color .22s ease, color .22s ease;
-    }
-    .links a:hover{
-      transform: translateY(-2px);
-      background: rgba(255,255,255,.06);
-      border-color: rgba(255,255,255,.12);
-      color: rgba(255,255,255,.92);
-    }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #00eeff;
+        }
 
-    .cta{
-      display:flex; gap: 10px; align-items:center;
-    }
-    .btn{
-      padding: 10px 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.06);
-      box-shadow: var(--shadow-soft);
-      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease;
-      display:inline-flex; align-items:center; gap: 10px;
-      font-weight: 650;
-      font-size: 13px;
-      white-space: nowrap;
-    }
-    .btn:hover{
-      transform: translateY(-2px);
-      border-color: rgba(255,255,255,.22);
-      background: rgba(255,255,255,.08);
-      box-shadow: 0 18px 46px rgba(0,0,0,.38);
-    }
-    .btn.primary{
-      border-color: rgba(255,122,24,.45);
-      background: linear-gradient(135deg, rgba(255,122,24,.22), rgba(181,107,255,.14));
-      position: relative;
-      overflow:hidden;
-    }
-    .btn.primary::after{
-      content:""; position:absolute; inset:-40%;
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), transparent 55%);
-      transform: translateX(-15%) translateY(-10%);
-      transition: transform .35s ease;
-    }
-    .btn.primary:hover::after{ transform: translateX(10%) translateY(0%); }
-    .pill{
-      font-size: 12px;
-      padding: 5px 9px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.06);
-      color: rgba(255,255,255,.78);
-    }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
 
-    /* ---------- Sections ---------- */
-    section{ padding: 64px 0; position: relative; }
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 18px;
-    }
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
 
-    .card{
-      border-radius: 22px;
-      background: linear-gradient(180deg, var(--glass), var(--glass-2));
-      border: 1px solid var(--stroke);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(14px);
-      overflow:hidden;
-      position: relative;
-    }
-    .card::before{
-      content:""; position:absolute; inset: -1px;
-      background: radial-gradient(420px 220px at 20% 0%, rgba(255,122,24,.18), transparent 60%),
-                  radial-gradient(420px 220px at 90% 10%, rgba(74,163,255,.14), transparent 60%),
-                  radial-gradient(420px 260px at 60% 100%, rgba(181,107,255,.12), transparent 60%);
-      opacity: .8;
-      pointer-events:none;
-    }
-    .card > *{ position: relative; z-index: 1; }
-    .pad{ padding: 22px; }
+        .nav-links a:hover {
+            color: #00eeff;
+        }
 
-    .kicker{
-      display:flex; gap: 10px; align-items:center; flex-wrap:wrap;
-      margin-bottom: 10px;
-    }
-    .dot{
-      width: 9px; height: 9px; border-radius: 999px;
-      background: var(--orange);
-      box-shadow: 0 0 0 6px rgba(255,122,24,.10);
-    }
-    .title{
-      margin: 8px 0 10px;
-      font-size: clamp(28px, 3.6vw, 46px);
-      line-height: 1.05;
-      letter-spacing: -0.6px;
-      font-weight: 850;
-    }
-    .subtitle{
-      margin: 0;
-      color: var(--muted);
-      font-size: 15.5px;
-      line-height: 1.65;
-    }
+        /* Home Section */
+        .home {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            position: relative;
+        }
 
-    /* ---------- Hero ---------- */
-    .hero{ padding-top: 36px; }
-    .hero-left{ grid-column: 1 / span 7; }
-    .hero-right{ grid-column: 8 / span 5; }
+        .home-content {
+            flex: 1;
+            max-width: 600px;
+        }
 
-    .hero-stats{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 18px;
-    }
-    .stat{
-      padding: 14px 14px;
-      border-radius: 18px;
-      border: 1px solid var(--stroke-2);
-      background: rgba(255,255,255,.04);
-      transition: transform .22s ease, border-color .22s ease, background .22s ease;
-    }
-    .stat:hover{
-      transform: translateY(-2px);
-      border-color: rgba(255,255,255,.18);
-      background: rgba(255,255,255,.06);
-    }
-    .stat b{ display:block; font-size: 18px; letter-spacing: -.2px; }
-    .stat span{ font-size: 12.5px; color: var(--muted); }
+        .home-content h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #00eeff;
+        }
 
-    .hero-actions{
-      display:flex; gap: 12px; align-items:center; flex-wrap:wrap;
-      margin-top: 18px;
-    }
+        .home-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00eeff, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
-    .profile{
-      display:flex; gap: 14px; align-items:center;
-      padding: 18px;
-      border-bottom: 1px solid rgba(255,255,255,.08);
-    }
-    .avatar{
-      width: 52px; height: 52px; border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.18);
-      background:
-        radial-gradient(18px 18px at 30% 30%, rgba(255,255,255,.45), transparent 55%),
-        linear-gradient(135deg, rgba(74,163,255,.45), rgba(255,122,24,.35));
-      box-shadow: 0 18px 36px rgba(0,0,0,.35);
-    }
-    .profile h3{ margin:0; font-size: 14.5px; font-weight: 800; }
-    .profile p{ margin:2px 0 0; color: var(--muted); font-size: 12.5px; }
-    .mini{
-      padding: 18px;
-      display:grid;
-      gap: 12px;
-    }
-    .mini .row{
-      display:flex; justify-content:space-between; gap: 12px;
-      padding: 12px 12px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      transition: transform .2s ease, border-color .2s ease;
-    }
-    .mini .row:hover{ transform: translateY(-2px); border-color: rgba(255,255,255,.18); }
-    .mini .row span{ color: var(--muted); font-size: 12.5px; }
-    .mini .row b{ font-size: 12.8px; }
+        .home-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #cccccc;
+        }
 
-    /* ---------- Section Headings ---------- */
-    .section-head{
-      display:flex; align-items:flex-end; justify-content:space-between;
-      gap: 14px; margin-bottom: 18px;
-    }
-    .section-head h2{
-      margin:0;
-      font-size: 22px;
-      font-weight: 850;
-      letter-spacing: -0.3px;
-    }
-    .section-head p{ margin:0; color: var(--muted); font-size: 13.5px; }
+        .btn-box {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(45deg, #00eeff, #0066cc);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
 
-    /* ---------- Skills Chips ---------- */
-    .chips{
-      display:flex; flex-wrap:wrap; gap: 10px;
-    }
-    .chip{
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.05);
-      font-size: 13px;
-      color: rgba(255,255,255,.80);
-      transition: transform .18s ease, background .18s ease, border-color .18s ease;
-    }
-    .chip:hover{
-      transform: translateY(-2px);
-      background: rgba(255,255,255,.07);
-      border-color: rgba(255,122,24,.30);
-    }
+        .btn-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 238, 255, 0.3);
+        }
 
-    /* ---------- Project Cards ---------- */
-    .projects .card{ transition: transform .22s ease, border-color .22s ease; }
-    .projects .card:hover{ transform: translateY(-4px); border-color: rgba(255,255,255,.20); }
-    .proj{
-      display:flex; flex-direction:column; gap: 12px;
-    }
-    .tagrow{ display:flex; gap: 8px; flex-wrap:wrap; }
-    .tag{
-      font-size: 12px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.04);
-      color: rgba(255,255,255,.76);
-    }
-    .proj h3{ margin:0; font-size: 16px; font-weight: 850; letter-spacing:-.15px; }
-    .proj p{ margin:0; color: var(--muted); font-size: 13.5px; line-height: 1.6; }
-    .proj .footer{
-      display:flex; justify-content:space-between; align-items:center; gap: 12px;
-      margin-top: 6px;
-    }
-    .arrow{
-      width: 38px; height: 38px; border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.05);
-      display:grid; place-items:center;
-      transition: transform .2s ease, border-color .2s ease;
-    }
-    .projects .card:hover .arrow{ transform: translateX(3px); border-color: rgba(255,122,24,.35); }
+        .home-imgHover {
+            position: absolute;
+            right: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(45deg, #00eeff, #0066cc);
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 3s ease-in-out infinite;
+        }
 
-    /* ---------- Timeline ---------- */
-    .timeline{
-      display:grid; gap: 12px;
-    }
-    .step{
-      padding: 14px 14px;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      display:flex; gap: 12px;
-      transition: transform .2s ease, border-color .2s ease;
-    }
-    .step:hover{ transform: translateY(-2px); border-color: rgba(255,255,255,.18); }
-    .step .num{
-      width: 34px; height: 34px; border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.16);
-      display:grid; place-items:center;
-      background: linear-gradient(135deg, rgba(255,122,24,.20), rgba(74,163,255,.10));
-      font-weight: 850;
-      color: rgba(255,255,255,.86);
-      flex: 0 0 auto;
-    }
-    .step b{ display:block; font-size: 13.5px; }
-    .step span{ color: var(--muted); font-size: 12.8px; line-height: 1.55; }
+        @keyframes float {
+            0%, 100% { transform: translateY(-50%) rotate(0deg); }
+            50% { transform: translateY(-60%) rotate(180deg); }
+        }
 
-    /* ---------- Footer / Contact ---------- */
-    .contact{
-      display:grid; grid-template-columns: 1.2fr .8fr; gap: 14px;
-    }
-    .field{
-      width:100%;
-      padding: 12px 14px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.05);
-      color: rgba(255,255,255,.90);
-      outline: none;
-      transition: border-color .18s ease, transform .18s ease, background .18s ease;
-    }
-    .field:focus{
-      border-color: rgba(255,122,24,.35);
-      background: rgba(255,255,255,.06);
-      transform: translateY(-1px);
-    }
-    textarea.field{ min-height: 120px; resize: vertical; }
+        /* About Section */
+        .about {
+            padding: 100px 0;
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
 
-    .foot{
-      padding: 26px 0 36px;
-      color: rgba(255,255,255,.60);
-      font-size: 12.5px;
-    }
+        .about-img {
+            flex: 1;
+            text-align: center;
+        }
 
-    /* ---------- Responsive ---------- */
-    @media (max-width: 980px){
-      .hero-left{ grid-column: 1 / -1; }
-      .hero-right{ grid-column: 1 / -1; }
-      .hero-stats{ grid-template-columns: repeat(3, 1fr); }
-      .contact{ grid-template-columns: 1fr; }
-      .links{ display:none; }
-    }
-    @media (max-width: 520px){
-      .hero-stats{ grid-template-columns: 1fr; }
-      .btn{ width: 100%; justify-content:center; }
-    }
-  </style>
+        .about-img img {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 4px solid #00eeff;
+            object-fit: cover;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-text span {
+            color: #00eeff;
+        }
+
+        .about-text h4 {
+            font-size: 1.5rem;
+            color: #00eeff;
+            margin-bottom: 1rem;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            color: #cccccc;
+            margin-bottom: 2rem;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 100px 0;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .sub-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .sub-title span {
+            color: #00eeff;
+        }
+
+        .services-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .services-list > div {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(0, 238, 255, 0.2);
+        }
+
+        .services-list > div:hover {
+            transform: translateY(-10px);
+            border-color: #00eeff;
+        }
+
+        .services-list i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .services-list h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #00eeff;
+        }
+
+        .services-list p {
+            color: #cccccc;
+            margin-bottom: 1.5rem;
+        }
+
+        .read {
+            color: #00eeff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .read:hover {
+            color: #ffffff;
+        }
+
+        /* Skills Section */
+        .skills {
+            padding: 100px 0;
+        }
+
+        .heading1 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #00eeff;
+        }
+
+        .Technical-bars {
+            margin-bottom: 3rem;
+        }
+
+        .bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .bar i {
+            font-size: 2rem;
+            margin-right: 1rem;
+        }
+
+        .info {
+            flex: 1;
+        }
+
+        .info span {
+            font-weight: 600;
+            color: #00eeff;
+        }
+
+        .process-line {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .process-line::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: linear-gradient(45deg, #00eeff, #0066cc);
+            border-radius: 4px;
+            animation: skillLoad 2s ease-in-out;
+        }
+
+        .HTML::after { width: 90%; }
+        .react::after { width: 75%; }
+        .CCS::after { width: 85%; }
+        .JavaScript::after { width: 80%; }
+        .Python::after { width: 85%; }
+
+        @keyframes skillLoad {
+            from { width: 0; }
+        }
+
+        /* Professional Skills */
+        .container1 {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .radial-bars {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .radial-bar {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .radial-bar svg {
+            width: 150px;
+            height: 150px;
+        }
+
+        .progress-bar {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.2);
+            stroke-width: 8;
+        }
+
+        .progress-bar-fill {
+            fill: none;
+            stroke: #00eeff;
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-dasharray: 314;
+            stroke-dashoffset: 314;
+            animation: progressLoad 2s ease-in-out forwards;
+        }
+
+        @keyframes progressLoad {
+            to { stroke-dashoffset: 157; }
+        }
+
+        .percentage {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #00eeff;
+            margin-top: 1rem;
+        }
+
+        .skill-name {
+            font-size: 1rem;
+            color: #cccccc;
+            margin-top: 0.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .home-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .about {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .services-list {
+                grid-template-columns: 1fr;
+            }
+
+            .radial-bars {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
 </head>
-
 <body>
-  <div class="orb one"></div>
-  <div class="orb two"></div>
-  <div class="orb three"></div>
-  <div class="grain"></div>
-
-  <!-- NAV -->
-  <div class="nav-wrap">
-    <div class="container nav">
-      <a class="brand" href="#top" aria-label="Home">
-        <div class="logo" aria-hidden="true"></div>
-        <div>
-          <h1>Shubham Londhe</h1>
-          <p>TrainWithShubham • DevOps • AWS • Agentic AI</p>
+    <nav>
+        <div class="container">
+            <div class="logo">DevOps Pro</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#skills">Skills</a></li>
+            </ul>
         </div>
-      </a>
+    </nav>
 
-      <div class="links" aria-label="Navigation links">
-        <a href="#about">About</a>
-        <a href="#skills">Skills</a>
-        <a href="#projects">Projects</a>
-        <a href="#talks">Talks</a>
-        <a href="#content">Content</a>
-        <a href="#contact">Contact</a>
-      </div>
-
-      <div class="cta">
-        <span class="pill">Open to: Talks • Collabs • Workshops</span>
-        <a class="btn primary" href="#contact">
-          <span>Let’s build</span>
-          <span aria-hidden="true">↗</span>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- HERO -->
-  <main id="top" class="container hero">
-    <section class="grid" style="padding-bottom: 0;">
-      <div class="hero-left">
-        <div class="kicker">
-          <span class="dot" aria-hidden="true"></span>
-          <span class="pill">Developer Advocate • Educator • Founder</span>
-          <span class="pill">AWS • Kubernetes • Platform Engineering</span>
-        </div>
-
-        <h2 class="title">
-          I help engineers go from <span style="color: rgba(255,122,24,.95);">Zero</span> to
-          <span style="color: rgba(74,163,255,.95);">Hero</span> in DevOps — with JOSH - real projects, real systems.
-        </h2>
-
-        <p class="subtitle">
-          Building <b>TrainWithShubham</b> — a community-first learning brand for DevOps, Cloud, and modern delivery.
-          I speak, teach, and ship production-ready workflows: CI/CD, Kubernetes, security gates, and agentic automation.
-        </p>
-
-        <div class="hero-actions">
-          <a class="btn primary" href="#projects">View projects <span aria-hidden="true">→</span></a>
-          <a class="btn" href="#content">Watch content <span aria-hidden="true">▶</span></a>
-          <a class="btn" href="#contact">Invite for a talk <span aria-hidden="true">🎤</span></a>
-        </div>
-
-        <div class="hero-stats" aria-label="Highlights">
-          <div class="stat">
-            <b>130K+ YouTube</b>
-            <span>TrainWithShubham learners</span>
-          </div>
-          <div class="stat">
-            <b>85K+ LinkedIn</b>
-            <span>Tech community network</span>
-          </div>
-          <div class="stat">
-            <b>10+ Batches</b>
-            <span>Mentorship + paid cohorts</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="hero-right">
-        <div class="card">
-          <div class="profile">
-            <div class="avatar" aria-hidden="true"></div>
-            <div>
-              <h3>Shubham Londhe</h3>
-              <p>Founder, TrainWithShubham • DevRel • DevOps & Cloud</p>
+    <main>
+        <section class="home" id="home">
+            <div class="container">
+                <div class="home-content">
+                    <h3>Hello, It's Me</h3>
+                    <h1>DevOps Engineer</h1>
+                    <p>Passionate about cloud infrastructure, automation, and streamlining development workflows. Experienced in AWS, CI/CD pipelines, and infrastructure as code.</p>
+                    <a href="#about" class="btn-box">More About Me</a>
+                </div>
             </div>
-          </div>
+            <span class="home-imgHover"></span>
+        </section>
 
-          <div class="mini">
-            <div class="row">
-              <span>Signature series</span>
-              <b>DevOps – Zero To Hero</b>
+        <section class="about" id="about">
+            <div class="container">
+                <div class="about-img">
+                    <div style="width: 300px; height: 300px; background: linear-gradient(45deg, #0d0d0d, #131313); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 4rem; color: white;"></div>
+                </div>
+                <div class="about-text">
+                    <h2>About <span>Me</span></h2>
+                    <h4>Enthusiast DevOps Engineer!</h4>
+                    <p>DevOps Engineer with 3 years of IT experience transitioning from desktop support to cloud operations and automation. Skilled in implementing CI/CD pipelines, automating infrastructure using Ansible and Terraform, and managing deployments in AWS. Adept at optimizing system reliability and collaborating with cross-functional teams to streamline processes.</p>
+                    <a href="#services" class="btn-box">View My Services</a>
+                </div>
             </div>
-            <div class="row">
-              <span>Current obsession</span>
-              <b>Production Kubernetes + Observability</b>
+        </section>
+
+        <section class="services" id="services">
+            <div class="container">
+                <h1 class="sub-title">My <span>Services</span></h1>
+                <div class="services-list">
+                    <div>
+                        <i class='bx bx-cloud' style='color: #00eeff'></i>
+                        <h2>Cloud Infrastructure</h2>
+                        <p>Design and implement scalable cloud solutions using AWS services including EC2, S3, RDS, and Lambda for optimal performance and cost efficiency.</p>
+                        <a href="#" class="read">Learn More</a>
+                    </div>
+                    <div>
+                        <i class='bx bx-git-branch' style='color: #00eeff'></i>
+                        <h2>CI/CD Pipelines</h2>
+                        <p>Automate your deployment process with robust CI/CD pipelines using Jenkins, GitLab CI, and GitHub Actions for faster and more reliable releases.</p>
+                        <a href="#" class="read">Learn More</a>
+                    </div>
+                    <div>
+                        <i class='bx bx-cog' style='color: #00eeff'></i>
+                        <h2>Infrastructure Automation</h2>
+                        <p>Implement Infrastructure as Code using Terraform and Ansible to ensure consistent, repeatable, and version-controlled infrastructure deployments.</p>
+                        <a href="#" class="read">Learn More</a>
+                    </div>
+                </div>
             </div>
-            <div class="row">
-              <span>Next frontier</span>
-              <b>Agentic AI for DevOps workflows</b>
+        </section>
+
+        <section class="skills" id="skills">
+            <div class="container">
+                <h1 class="sub-title">My <span>Skills</span></h1>
+                
+                <h2 class="heading1">Technical Skills</h2>
+                <div class="Technical-bars">
+                    <div class="bar">
+                        <i style="color:#e34c26;" class='bx bxl-html5'></i>
+                        <div class="info">
+                            <span>AWS Cloud Services</span>
+                            <div class="process-line HTML"></div>
+                        </div>
+                    </div>
+                    <div class="bar">
+                        <i style="color:#61dafb;" class='bx bxl-docker'></i>
+                        <div class="info">
+                            <span>Docker & Kubernetes</span>
+                            <div class="process-line react"></div>
+                        </div>
+                    </div>
+                    <div class="bar">
+                        <i style="color:#1572b6;" class='bx bx-terminal'></i>
+                        <div class="info">
+                            <span>Linux Administration</span>
+                            <div class="process-line CCS"></div>
+                        </div>
+                    </div>
+                    <div class="bar">
+                        <i style="color:#f7df1e;" class='bx bxl-git'></i>
+                        <div class="info">
+                            <span>Git & Version Control</span>
+                            <div class="process-line JavaScript"></div>
+                        </div>
+                    </div>
+                    <div class="bar">
+                        <i style="color:#3776ab;" class='bx bxl-python'></i>
+                        <div class="info">
+                            <span>Python Scripting</span>
+                            <div class="process-line Python"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container1">
+                    <h2 class="heading1">Professional Skills</h2>
+                    <div class="radial-bars">
+                        <div class="radial-bar">
+                            <svg viewBox="0 0 100 100">
+                                <circle class="progress-bar" cx="50" cy="50" r="45"></circle>
+                                <circle class="progress-bar-fill" cx="50" cy="50" r="45" style="stroke-dashoffset: 94;"></circle>
+                            </svg>
+                            <div class="percentage">85%</div>
+                            <div class="skill-name">Problem Solving</div>
+                        </div>
+                        <div class="radial-bar">
+                            <svg viewBox="0 0 100 100">
+                                <circle class="progress-bar" cx="50" cy="50" r="45"></circle>
+                                <circle class="progress-bar-fill" cx="50" cy="50" r="45" style="stroke-dashoffset: 125;"></circle>
+                            </svg>
+                            <div class="percentage">75%</div>
+                            <div class="skill-name">Team Collaboration</div>
+                        </div>
+                        <div class="radial-bar">
+                            <svg viewBox="0 0 100 100">
+                                <circle class="progress-bar" cx="50" cy="50" r="45"></circle>
+                                <circle class="progress-bar-fill" cx="50" cy="50" r="45" style="stroke-dashoffset: 63;"></circle>
+                            </svg>
+                            <div class="percentage">90%</div>
+                            <div class="skill-name">Automation</div>
+                        </div>
+                        <div class="radial-bar">
+                            <svg viewBox="0 0 100 100">
+                                <circle class="progress-bar" cx="50" cy="50" r="45"></circle>
+                                <circle class="progress-bar-fill" cx="50" cy="50" r="45" style="stroke-dashoffset: 110;"></circle>
+                            </svg>
+                            <div class="percentage">80%</div>
+                            <div class="skill-name">Communication</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="row">
-              <span>Style</span>
-              <b>Simple, hands-on, no fluff</b>
-            </div>
+        </section>
+    </main>
 
-            <div class="hero-actions" style="margin-top: 2px;">
-              <a class="btn" href="#contact">Work with me <span aria-hidden="true">🤝</span></a>
-              <a class="btn" href="#about">Read bio <span aria-hidden="true">↓</span></a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
 
-    <!-- ABOUT -->
-    <section id="about">
-      <div class="section-head">
-        <div>
-          <h2>About</h2>
-          <p>Short story. Big mission. Long-term mindset.</p>
-        </div>
-        <span class="pill">Based in India • Global audience</span>
-      </div>
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(0, 0, 0, 0.95)';
+            } else {
+                nav.style.background = 'rgba(0, 0, 0, 0.9)';
+            }
+        });
 
-      <div class="grid">
-        <div class="card pad" style="grid-column: 1 / span 7;">
-          <p class="subtitle" style="margin-top:0;">
-            I’m a DevOps educator & DevRel professional, known for making complex topics feel easy — without dumbing them down.
-            My focus is building engineers who can ship: <b>CI/CD</b>, <b>Kubernetes</b>, <b>AWS</b>, security gates, and real observability.
-          </p>
-          <p class="subtitle">
-            I’ve helped thousands of learners (freshers + experienced) improve resumes, crack interviews, and build portfolio-grade projects.
-            My north-star is simple: <b>turn learning into leverage</b> — in career, confidence, and income.
-          </p>
+        // Animate skill bars on scroll
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px 0px -100px 0px'
+        };
 
-          <div class="chips" style="margin-top:14px;">
-            <span class="chip">Community-first teaching</span>
-            <span class="chip">Hands-on projects</span>
-            <span class="chip">Career clarity</span>
-            <span class="chip">Modern DevOps mindset</span>
-            <span class="chip">Builder energy</span>
-          </div>
-        </div>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const skillBars = entry.target.querySelectorAll('.process-line');
+                    skillBars.forEach(bar => {
+                        bar.style.animation = 'none';
+                        bar.offsetHeight; // Trigger reflow
+                        bar.style.animation = null;
+                    });
+                }
+            });
+        }, observerOptions);
 
-        <div class="card pad" style="grid-column: 8 / span 5;">
-          <div class="section-head" style="margin-bottom: 10px;">
-            <h2 style="font-size:18px;">What I bring</h2>
-            <p>For teams & audiences</p>
-          </div>
-
-          <div class="timeline">
-            <div class="step">
-              <div class="num">1</div>
-              <div>
-                <b>Clarity-first engineering</b>
-                <span>Break messy systems into shippable steps.</span>
-              </div>
-            </div>
-            <div class="step">
-              <div class="num">2</div>
-              <div>
-                <b>Production patterns</b>
-                <span>CI/CD, GitOps, security gates, and reliability basics.</span>
-              </div>
-            </div>
-            <div class="step">
-              <div class="num">3</div>
-              <div>
-                <b>Developer experience</b>
-                <span>Make tools lovable. Reduce friction. Increase output.</span>
-              </div>
-            </div>
-            <div class="step">
-              <div class="num">4</div>
-              <div>
-                <b>Storytelling that converts</b>
-                <span>Talks, workshops, content — built for outcomes.</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SKILLS -->
-    <section id="skills">
-      <div class="section-head">
-        <div>
-          <h2>Skills</h2>
-          <p>Tech I use to build and teach production reality.</p>
-        </div>
-        <span class="pill">DevOps • Cloud • Platform • AI</span>
-      </div>
-
-      <div class="grid">
-        <div class="card pad" style="grid-column: 1 / span 6;">
-          <h3 style="margin:0 0 10px; font-size:16px; font-weight:850;">Cloud & Kubernetes</h3>
-          <div class="chips">
-            <span class="chip">AWS (EKS, IAM, VPC, S3)</span>
-            <span class="chip">Kubernetes</span>
-            <span class="chip">Helm</span>
-            <span class="chip">Argo CD (GitOps)</span>
-            <span class="chip">Terraform</span>
-          </div>
-        </div>
-
-        <div class="card pad" style="grid-column: 7 / span 6;">
-          <h3 style="margin:0 0 10px; font-size:16px; font-weight:850;">CI/CD & Security</h3>
-          <div class="chips">
-            <span class="chip">GitHub Actions</span>
-            <span class="chip">Jenkins</span>
-            <span class="chip">Docker</span>
-            <span class="chip">Trivy</span>
-            <span class="chip">OWASP Dependency Check</span>
-            <span class="chip">SonarQube Quality Gates</span>
-          </div>
-        </div>
-
-        <div class="card pad" style="grid-column: 1 / span 12;">
-          <h3 style="margin:0 0 10px; font-size:16px; font-weight:850;">Observability & Agentic Automation</h3>
-          <div class="chips">
-            <span class="chip">Prometheus</span>
-            <span class="chip">Grafana</span>
-            <span class="chip">Logging/Tracing basics</span>
-            <span class="chip">Agentic AI for DevOps (tools + workflows)</span>
-            <span class="chip">Automation mindset</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROJECTS -->
-    <section id="projects" class="projects">
-      <div class="section-head">
-        <div>
-          <h2>Featured Projects</h2>
-          <p>Portfolio-worthy systems with real DevOps depth.</p>
-        </div>
-        <span class="pill">Swap these with your real links</span>
-      </div>
-
-      <div class="grid">
-        <a class="card pad" href="#" style="grid-column: 1 / span 4;">
-          <div class="proj">
-            <div class="tagrow">
-              <span class="tag">EKS</span><span class="tag">GitOps</span><span class="tag">Observability</span>
-            </div>
-            <h3>Kubernetes → Production Blueprint</h3>
-            <p>Terraform + EKS setup, Helm add-ons, GitOps CD, and monitoring — designed like a real platform.</p>
-            <div class="footer">
-              <span class="pill">Case study</span>
-              <span class="arrow" aria-hidden="true">↗</span>
-            </div>
-          </div>
-        </a>
-
-        <a class="card pad" href="#" style="grid-column: 5 / span 4;">
-          <div class="proj">
-            <div class="tagrow">
-              <span class="tag">CI/CD</span><span class="tag">Security</span><span class="tag">Quality Gates</span>
-            </div>
-            <h3>Secure CI Pipeline System</h3>
-            <p>Build → scan → gate → publish → deploy flow with Trivy + OWASP + SonarQube quality gates.</p>
-            <div class="footer">
-              <span class="pill">Repo</span>
-              <span class="arrow" aria-hidden="true">↗</span>
-            </div>
-          </div>
-        </a>
-
-        <a class="card pad" href="#" style="grid-column: 9 / span 4;">
-          <div class="proj">
-            <div class="tagrow">
-              <span class="tag">Agentic AI</span><span class="tag">DevOps</span><span class="tag">Automation</span>
-            </div>
-            <h3>AI DevOps Helper</h3>
-            <p>Automate routine DevOps tasks with tool-using agents: triage, docs, and runbook generation.</p>
-            <div class="footer">
-              <span class="pill">Demo</span>
-              <span class="arrow" aria-hidden="true">↗</span>
-            </div>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <!-- TALKS -->
-    <section id="talks">
-      <div class="section-head">
-        <div>
-          <h2>Talks & Workshops</h2>
-          <p>High-energy sessions that move people from theory to shipping.</p>
-        </div>
-        <span class="pill">Invite me • Keynotes • Colleges • Communities</span>
-      </div>
-
-      <div class="grid">
-        <div class="card pad" style="grid-column: 1 / span 6;">
-          <h3 style="margin:0 0 10px; font-size:16px; font-weight:850;">Popular session themes</h3>
-          <div class="timeline">
-            <div class="step"><div class="num">A</div><div><b>DevOps Roadmap 2026</b><span>What to learn, what to build, how to stand out.</span></div></div>
-            <div class="step"><div class="num">B</div><div><b>Kubernetes for Real Teams</b><span>From pods to production patterns.</span></div></div>
-            <div class="step"><div class="num">C</div><div><b>Modern CI/CD + DevSecOps</b><span>Quality gates, vulnerability scanning, GitOps.</span></div></div>
-          </div>
-        </div>
-
-        <div class="card pad" style="grid-column: 7 / span 6;">
-          <h3 style="margin:0 0 10px; font-size:16px; font-weight:850;">Why audiences love it</h3>
-          <div class="chips">
-            <span class="chip">Hands-on, not slides-only</span>
-            <span class="chip">Beginner-friendly clarity</span>
-            <span class="chip">Production examples</span>
-            <span class="chip">Actionable takeaways</span>
-            <span class="chip">Career angle included</span>
-          </div>
-          <p class="subtitle" style="margin-top:12px;">
-            Want a session tailored to your audience (college / fresher / team / leadership)? Ping me.
-          </p>
-          <div class="hero-actions" style="margin-top:12px;">
-            <a class="btn primary" href="#contact">Request a session <span aria-hidden="true">→</span></a>
-            <a class="btn" href="#projects">See builds <span aria-hidden="true">🧩</span></a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTENT -->
-    <section id="content">
-      <div class="section-head">
-        <div>
-          <h2>Content Engine</h2>
-          <p>YouTube + LinkedIn + Community — consistent value.</p>
-        </div>
-        <span class="pill">TrainWithShubham</span>
-      </div>
-
-      <div class="grid">
-        <div class="card pad" style="grid-column: 1 / span 4;">
-          <h3 style="margin:0 0 10px; font-size:16px; font-weight:850;">YouTube</h3>
-          <p class="subtitle">Long-form tutorials, one-shots, and project builds for DevOps & Cloud.</p>
-          <div class="chips" style="margin-top:12px;">
-            <span class="chip">DevOps One Shot</span>
-            <span class="chip">Kubernetes</span>
-            <span class="chip">AWS</span>
-          </div>
-        </div>
-
-        <div class="card pad" style="grid-column: 5 / span 4;">
-          <h3 style="margin:0 0 10px; font-size:16px; font-weight:850;">LinkedIn</h3>
-          <p class="subtitle">Storytelling + practical posts that convert attention into action.</p>
-          <div class="chips" style="margin-top:12px;">
-            <span class="chip">Career growth</span>
-            <span class="chip">DevOps tips</span>
-            <span class="chip">Build-in-public</span>
-          </div>
-        </div>
-
-        <div class="card pad" style="grid-column: 9 / span 4;">
-          <h3 style="margin:0 0 10px; font-size:16px; font-weight:850;">Community</h3>
-          <p class="subtitle">Weekly engagement, builder rewards, and project-driven learning.</p>
-          <div class="chips" style="margin-top:12px;">
-            <span class="chip">Challenges</span>
-            <span class="chip">Mentorship</span>
-            <span class="chip">Review culture</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact">
-      <div class="section-head">
-        <div>
-          <h2>Contact</h2>
-          <p>Let’s collaborate — workshops, consulting, product dev, or community partnerships.</p>
-        </div>
-        <span class="pill">Fast replies • Clear outcomes</span>
-      </div>
-
-      <div class="grid">
-        <div class="card pad" style="grid-column: 1 / span 7;">
-          <form onsubmit="event.preventDefault(); alert('Form demo only. Connect this to your backend or a form service.');">
-            <div class="contact">
-              <input class="field" placeholder="Your name" required />
-              <input class="field" placeholder="Email" type="email" required />
-            </div>
-            <div style="height:12px;"></div>
-            <input class="field" placeholder="What do you want to build together?" required />
-            <div style="height:12px;"></div>
-            <textarea class="field" placeholder="Tell me the context: audience / goal / timeline / budget..."></textarea>
-            <div style="height:12px;"></div>
-            <button class="btn primary" type="submit">Send message <span aria-hidden="true">→</span></button>
-            <span style="display:inline-block; margin-left:10px; color: var(--muted); font-size: 12.5px;">
-              Tip: Replace this with Formspree / Google Form / your API.
-            </span>
-          </form>
-        </div>
-
-        <div class="card pad" style="grid-column: 8 / span 5;">
-          <h3 style="margin:0 0 10px; font-size:16px; font-weight:850;">Quick links</h3>
-          <div class="timeline">
-            <a class="step" href="#">
-              <div class="num">Y</div>
-              <div><b>YouTube</b><span>TrainWithShubham channel</span></div>
-            </a>
-            <a class="step" href="#">
-              <div class="num">L</div>
-              <div><b>LinkedIn</b><span>Posts, newsletters, updates</span></div>
-            </a>
-            <a class="step" href="#">
-              <div class="num">G</div>
-              <div><b>GitHub</b><span>Projects and learning repos</span></div>
-            </a>
-            <a class="step" href="#">
-              <div class="num">W</div>
-              <div><b>Workshops</b><span>Corporate / college sessions</span></div>
-            </a>
-          </div>
-
-          <div class="hero-actions" style="margin-top: 14px;">
-            <a class="btn" href="#top">Back to top <span aria-hidden="true">↑</span></a>
-            <a class="btn primary" href="#projects">See my work <span aria-hidden="true">↗</span></a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="foot container">
-      © <span id="year"></span> Shubham Londhe • Built with glassmorphism + clean motion • <span style="color:rgba(255,122,24,.85)">TrainWithShubham</span>
-    </div>
-  </main>
-
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    // tiny "magnetic hover" for buttons (feels premium)
-    const magnets = document.querySelectorAll(".btn");
-    magnets.forEach(btn => {
-      btn.addEventListener("mousemove", (e) => {
-        const r = btn.getBoundingClientRect();
-        const x = e.clientX - r.left - r.width / 2;
-        const y = e.clientY - r.top - r.height / 2;
-        btn.style.transform = `translateY(-2px) translate(${x * 0.04}px, ${y * 0.08}px)`;
-      });
-      btn.addEventListener("mouseleave", () => {
-        btn.style.transform = "";
-      });
-    });
-  </script>
-</body>
+        const skillsSection = document.querySelector('.Technical-bars');
+        if (skillsSection) {
+            observer.observe(skillsSection);
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'993f34dac6ae5959',t:'MTc2MTM2OTAxNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
