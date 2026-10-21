@@ -1,10 +1,11 @@
----
+
 name: CICD
+
 on:
   workflow_dispatch:
     inputs:
       environment:
-        description: This is the environment value where this workflow runs
+        description: Environment where this workflow runs
         default: dev
         required: true
         type: choice
@@ -12,44 +13,77 @@ on:
           - dev
           - prod
           - staging
+
+permissions:
+  contents: read
+
 jobs:
   code:
+    name: Checkout Code
     runs-on: ubuntu-latest
     steps:
-      - name: checkout code
-        run: echo "COde Clone from GitHub"
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Confirm Checkout
+        run: echo "Code cloned from GitHub"
+
   build:
-    needs:
-      - code
+    name: Build Docker Image
+    needs: code
     runs-on: ubuntu-latest
     steps:
-      - name: Build Docker Container
-        run: echo "Docker Container build"
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker Image
+        run: |
+          docker build \
+            -t ${{ secrets.DOCKER_USERNAME }}/myapp:${{ github.sha }} \
+            -t ${{ secrets.DOCKER_USERNAME }}/myapp:latest .
+
+      - name: Push Docker Image
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/myapp:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/myapp:latest
+
   test:
-    needs:
-      - build
+    name: Test Docker Image
+    needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Test the container
-        run: echo "Testing the container"
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Pull Docker Image
+        run: docker pull ${{ secrets.DOCKER_USERNAME }}/myapp:${{ github.sha }}
+
+      - name: Test Image
+        run: |
+          docker image inspect ${{ secrets.DOCKER_USERNAME }}/myapp:${{ github.sha }}
+          echo "Docker image test passed"
+
   deploy:
+    name: Deploy Application
     if: inputs.environment == 'dev'
-    needs:
-      - build
-      - test
+    needs: test
     runs-on: ubuntu-latest
     steps:
-      - name: Deploying the app
-        run: echo "Docker compose deployed the app"
-  name: Login to Docker Hub
-  uses: docker/login-action@v3
-  with:
-    username: ${{ secrets.DOCKER_USERNAME }}
-    password: ${{ secrets.DOCKER_PASSWORD }}
-
-  
-  name: Build Docker Image
-  run: docker build -t ${{ secrets.DOCKER_USERNAME }}/myapp:latest .
-
-  name: Push Docker Image
-  run: docker push ${{ secrets.DOCKER_USERNAME }}/myapp:latest
+      - name: Deploying the App
+        run: |
+          echo "Docker image is available on Docker Hub"
+          echo "Image: ${{ secrets.DOCKER_USERNAME }}/myapp:${{ github.sha }}"
+          echo "Environment: ${{ inputs.environment }}"
+          echo "Configure your deployment server here"
